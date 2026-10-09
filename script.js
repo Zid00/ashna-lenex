@@ -27,40 +27,46 @@ document.getElementById("church-map").href=wedding.churchMap;
 document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
-
-/* START MOBILE GALLERY AT THE MIDDLE PHOTO */
+/* INITIALIZE MOBILE GALLERY AT CENTER PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  const photos = [...gallery.querySelectorAll(".gallery-photo")];
-  const middle = photos[Math.floor(photos.length / 2)];
+  if (window.innerWidth > 700) {
+    gallery.classList.add("gallery-initialized");
+    return;
+  }
 
-  if (!middle) return;
+  const photos = gallery.querySelectorAll(".gallery-photo");
+  const middlePhoto = photos[Math.floor(photos.length / 2)];
 
-  function setInitialPosition() {
-    if (!window.matchMedia("(max-width: 700px)").matches) return;
+  if (!middlePhoto) return;
 
-    // Keep horizontal scrolling native.
-    const oldSnap = gallery.style.scrollSnapType;
-    gallery.style.scrollSnapType = "none";
+  function initializeGallery() {
+    gallery.style.setProperty("scroll-snap-type", "none", "important");
+    gallery.style.scrollBehavior = "auto";
+
+    const galleryRect = gallery.getBoundingClientRect();
+    const photoRect = middlePhoto.getBoundingClientRect();
 
     const target =
-      middle.offsetLeft -
-      gallery.offsetLeft -
-      (gallery.clientWidth - middle.clientWidth) / 2;
+      gallery.scrollLeft +
+      photoRect.left -
+      galleryRect.left -
+      (gallery.clientWidth - photoRect.width) / 2;
 
     gallery.scrollLeft = target;
 
     requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = oldSnap;
+      gallery.classList.add("gallery-initialized");
+
+      requestAnimationFrame(() => {
+        gallery.style.removeProperty("scroll-snap-type");
+        gallery.style.removeProperty("scroll-behavior");
+      });
     });
   }
 
-  // Apply before images finish loading.
-  setInitialPosition();
-
-  // Apply once more when the page finishes loading.
-  window.addEventListener("load", setInitialPosition, { once: true });
+  requestAnimationFrame(initializeGallery);
 })();
