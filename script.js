@@ -29,48 +29,49 @@ setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.b
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
 
-
-/* Mobile gallery: start with the third photo centered */
+/* Start mobile gallery on the third photo */
 
 (() => {
-  const mobile = window.matchMedia("(max-width: 700px)");
+  const gallery = document.getElementById("weddingGallery");
+  if (!gallery) return;
+
+  const photos = gallery.querySelectorAll(".gallery-photo");
+  if (photos.length < 3) return;
 
   function centerThirdPhoto() {
-    if (!mobile.matches) return;
+    if (window.innerWidth > 700) return;
 
-    const gallery = document.getElementById("weddingGallery");
-    if (!gallery) return;
+    const photo = photos[2];
 
-    const thirdPhoto = gallery.querySelectorAll(".gallery-photo")[2];
-    if (!thirdPhoto) return;
-
-    // Disable scroll snapping during initial positioning
+    // Temporarily disable snapping while setting the position
     gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
 
-    const galleryBox = gallery.getBoundingClientRect();
-    const photoBox = thirdPhoto.getBoundingClientRect();
+    const galleryRect = gallery.getBoundingClientRect();
+    const photoRect = photo.getBoundingClientRect();
 
     const target =
       gallery.scrollLeft +
-      photoBox.left -
-      galleryBox.left -
-      (gallery.clientWidth - photoBox.width) / 2;
+      photoRect.left -
+      galleryRect.left -
+      (gallery.clientWidth - photoRect.width) / 2;
 
     gallery.scrollLeft = target;
 
-    requestAnimationFrame(() => {
+    // Restore snapping after the browser has applied the position
+    setTimeout(() => {
       gallery.style.scrollSnapType = "";
       gallery.style.scrollBehavior = "";
-    });
+    }, 150);
   }
 
   function initializeGallery() {
-    if (!mobile.matches) return;
+    if (window.innerWidth > 700) return;
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(centerThirdPhoto);
-    });
+    // Run after the page layout has settled
+    centerThirdPhoto();
+    setTimeout(centerThirdPhoto, 100);
+    setTimeout(centerThirdPhoto, 500);
   }
 
   window.addEventListener("load", initializeGallery);
