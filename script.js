@@ -28,58 +28,51 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - ALWAYS START AT THE MIDDLE PHOTO */
+/* MOBILE GALLERY - OPEN AT CENTER PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  let hasInitialized = false;
+  let userInteracted = false;
 
-  function openMiddlePhoto() {
-    if (window.innerWidth > 700 || hasInitialized) return;
+  gallery.addEventListener("touchstart", () => {
+    userInteracted = true;
+  }, { passive: true });
+
+  gallery.addEventListener("pointerdown", () => {
+    userInteracted = true;
+  }, { passive: true });
+
+  function centerMiddlePhoto() {
+    if (window.innerWidth > 700 || userInteracted) return;
 
     const photos = gallery.querySelectorAll(".gallery-photo");
     if (!photos.length) return;
 
-    // Automatically select the middle photo
     const middleIndex = Math.floor(photos.length / 2);
     const middlePhoto = photos[middleIndex];
 
-    // Temporarily disable snapping while positioning
-    gallery.style.scrollSnapType = "none";
-    gallery.style.scrollBehavior = "auto";
-
-    const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = middlePhoto.getBoundingClientRect();
-
-    const target =
-      gallery.scrollLeft +
-      photoRect.left -
-      galleryRect.left -
-      (gallery.clientWidth - photoRect.width) / 2;
-
-    gallery.scrollLeft = target;
-
-    // Restore normal gallery swiping
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        gallery.style.removeProperty("scroll-snap-type");
-        gallery.style.removeProperty("scroll-behavior");
-        hasInitialized = true;
-      });
+    // Directly center the middle photo.
+    middlePhoto.scrollIntoView({
+      behavior: "instant",
+      block: "nearest",
+      inline: "center"
     });
   }
 
-  function initializeGallery() {
+  // Position gallery after page layout.
+  function initialize() {
     requestAnimationFrame(() => {
-      requestAnimationFrame(openMiddlePhoto);
+      requestAnimationFrame(centerMiddlePhoto);
     });
   }
 
-  if (document.readyState === "complete") {
-    initializeGallery();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize);
   } else {
-    window.addEventListener("load", initializeGallery, { once: true });
+    initialize();
   }
+
+  window.addEventListener("load", initialize, { once: true });
 })();
