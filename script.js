@@ -31,53 +31,35 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
 /* Start mobile gallery on the third photo */
 
+/* Default mobile gallery: center the third photo */
+
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  const photos = gallery.querySelectorAll(".gallery-photo");
-  if (photos.length < 3) return;
-
   function centerThirdPhoto() {
     if (window.innerWidth > 700) return;
 
-    const photo = photos[2];
+    const photo = gallery.querySelectorAll(".gallery-photo")[2];
+    if (!photo) return;
 
-    // Temporarily disable snapping while setting the position
-    gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
+    gallery.style.scrollSnapType = "none";
 
     const galleryRect = gallery.getBoundingClientRect();
     const photoRect = photo.getBoundingClientRect();
 
-    const target =
-      gallery.scrollLeft +
+    gallery.scrollLeft +=
       photoRect.left -
       galleryRect.left -
       (gallery.clientWidth - photoRect.width) / 2;
 
-    gallery.scrollLeft = target;
-
-    // Restore snapping after the browser has applied the position
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       gallery.style.scrollSnapType = "";
       gallery.style.scrollBehavior = "";
-    }, 150);
+    });
   }
 
-  function initializeGallery() {
-    if (window.innerWidth > 700) return;
-
-    // Run after the page layout has settled
-    centerThirdPhoto();
-    setTimeout(centerThirdPhoto, 100);
-    setTimeout(centerThirdPhoto, 500);
-  }
-
-  window.addEventListener("load", initializeGallery);
-  window.addEventListener("pageshow", initializeGallery);
-
-  if (document.readyState === "complete") {
-    initializeGallery();
-  }
+  window.addEventListener("load", centerThirdPhoto);
+  window.addEventListener("pageshow", centerThirdPhoto);
 })();
