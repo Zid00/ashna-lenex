@@ -1016,7 +1016,7 @@ footer small {
     flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 12px;
-
+    scroll-padding-inline: 5%;
     width: 100%;
     max-width: 100%;
     margin: 0;

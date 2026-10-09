@@ -28,8 +28,7 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-
-/* Center the third gallery photo on mobile */
+/* Show the third photo by default on mobile */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
@@ -38,23 +37,25 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
   function centerThirdPhoto() {
     if (window.innerWidth > 700) return;
 
-    const photo = gallery.querySelectorAll(".gallery-photo")[2];
-    if (!photo) return;
+    const thirdPhoto = gallery.querySelectorAll(".gallery-photo")[2];
+    if (!thirdPhoto) return;
 
-    gallery.style.scrollBehavior = "auto";
+    const previousSnap = gallery.style.scrollSnapType;
     gallery.style.scrollSnapType = "none";
 
     const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = photo.getBoundingClientRect();
+    const photoRect = thirdPhoto.getBoundingClientRect();
 
-    gallery.scrollLeft +=
+    const target =
+      gallery.scrollLeft +
       photoRect.left -
       galleryRect.left -
       (gallery.clientWidth - photoRect.width) / 2;
 
+    gallery.scrollLeft = target;
+
     requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = "";
-      gallery.style.scrollBehavior = "";
+      gallery.style.scrollSnapType = previousSnap;
     });
   }
 
