@@ -28,57 +28,44 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - OPEN AT PHOTO 3 */
+/* MOBILE GALLERY - CENTER THIRD PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  const photos = gallery.querySelectorAll(".gallery-photo");
-  const middlePhoto = photos[2];
+  function initializeGallery() {
+    const photos = gallery.querySelectorAll(".gallery-photo");
 
-  if (!middlePhoto) {
-    gallery.classList.add("gallery-ready");
-    return;
-  }
-
-  function centerPhoto() {
-    if (window.innerWidth > 700) {
+    if (window.innerWidth > 700 || photos.length < 3) {
       gallery.classList.add("gallery-ready");
       return;
     }
 
-    gallery.classList.remove("gallery-ready");
+    const middlePhoto = photos[2];
 
-    const oldSnap = gallery.style.scrollSnapType;
-    const oldBehavior = gallery.style.scrollBehavior;
-
+    // Disable snapping only during initial positioning.
     gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
 
-    // Use positions relative to the scroll container.
-    const galleryBox = gallery.getBoundingClientRect();
-    const photoBox = middlePhoto.getBoundingClientRect();
-
-    const target =
-      gallery.scrollLeft +
-      photoBox.left -
-      galleryBox.left -
-      (gallery.clientWidth - photoBox.width) / 2;
-
-    gallery.scrollLeft = target;
-
     requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = oldSnap;
-      gallery.style.scrollBehavior = oldBehavior;
-      gallery.classList.add("gallery-ready");
-    });
-  }
+      const galleryRect = gallery.getBoundingClientRect();
+      const photoRect = middlePhoto.getBoundingClientRect();
 
-  function initializeGallery() {
-    // Wait for the browser to finish laying out the photos.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(centerPhoto);
+      const target =
+        gallery.scrollLeft +
+        photoRect.left -
+        galleryRect.left -
+        (gallery.clientWidth - photoRect.width) / 2;
+
+      gallery.scrollLeft = target;
+
+      // Restore swiping and snapping after positioning.
+      requestAnimationFrame(() => {
+        gallery.style.removeProperty("scroll-snap-type");
+        gallery.style.removeProperty("scroll-behavior");
+        gallery.classList.add("gallery-ready");
+      });
     });
   }
 
@@ -87,6 +74,4 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
   } else {
     window.addEventListener("load", initializeGallery, { once: true });
   }
-
-  window.addEventListener("pageshow", initializeGallery);
 })();
