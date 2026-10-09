@@ -1175,3 +1175,44 @@ footer small {
 
 }
 
+
+/* MOBILE GALLERY - SMALLER PHOTOS */
+
+@media screen and (max-width: 700px) {
+
+  #weddingGallery {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0 12% 15px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #weddingGallery > .gallery-photo {
+    flex: 0 0 76%;
+    width: 76%;
+    min-width: 76%;
+
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: center;
+    overflow: hidden;
+  }
+
+  #weddingGallery .gallery-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+}
