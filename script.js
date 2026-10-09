@@ -43,3 +43,37 @@ window.addEventListener("load", () => {
     behavior: "instant"
   });
 });
+
+
+/* Center third photo when website opens */
+
+function centerDefaultPhoto() {
+  const gallery = document.getElementById("weddingGallery");
+
+  if (!gallery || window.innerWidth > 700) return;
+
+  const photos = gallery.querySelectorAll(".gallery-photo");
+  const thirdPhoto = photos[2];
+
+  if (!thirdPhoto) return;
+
+  // Calculate exact horizontal center
+  const galleryRect = gallery.getBoundingClientRect();
+  const photoRect = thirdPhoto.getBoundingClientRect();
+
+  const targetScroll =
+    gallery.scrollLeft +
+    (photoRect.left - galleryRect.left) -
+    (gallery.clientWidth - photoRect.width) / 2;
+
+  gallery.scrollTo({
+    left: targetScroll,
+    behavior: "instant"
+  });
+}
+
+if (document.readyState === "complete") {
+  centerDefaultPhoto();
+} else {
+  window.addEventListener("load", centerDefaultPhoto);
+}
