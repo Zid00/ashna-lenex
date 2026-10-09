@@ -28,7 +28,9 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* DEFAULT MOBILE GALLERY - CENTER PHOTO 3 */
+/* ========================================
+   MOBILE GALLERY - PHOTO 3 BY DEFAULT
+======================================== */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
@@ -36,19 +38,21 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
   if (!gallery) return;
 
   const photos = gallery.querySelectorAll(".gallery-photo");
+
+  // Index 2 means the third photo
   const middlePhoto = photos[2];
 
   if (!middlePhoto) return;
 
   function centerMiddlePhoto() {
-    // Apply only on mobile
+    // Only apply to mobile screens
     if (window.innerWidth > 700) return;
 
-    // Disable snapping temporarily
+    // Disable snapping while setting the position
     gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
 
-    // Calculate the middle photo's position
+    // Calculate exact center position
     const galleryRect = gallery.getBoundingClientRect();
     const photoRect = middlePhoto.getBoundingClientRect();
 
@@ -58,23 +62,23 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
       galleryRect.left -
       (gallery.clientWidth - photoRect.width) / 2;
 
-    // Display photo 3 in the center
+    // Move gallery to the third photo
     gallery.scrollLeft = targetScroll;
 
-    // Restore normal horizontal swiping
+    // Restore normal swipe behavior
     requestAnimationFrame(() => {
       gallery.style.scrollSnapType = "";
       gallery.style.scrollBehavior = "";
     });
   }
 
-  // Center when website first opens
-  if (document.readyState === "complete") {
-    centerMiddlePhoto();
-  } else {
-    window.addEventListener("load", centerMiddlePhoto);
-  }
+  // Run when page finishes loading
+  window.addEventListener("load", () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(centerMiddlePhoto);
+    });
+  });
 
-  // Center when page is restored
+  // Handle pages restored from browser cache
   window.addEventListener("pageshow", centerMiddlePhoto);
 })();
