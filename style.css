@@ -1228,3 +1228,23 @@ footer small {
     scroll-snap-align: center;
   }
 }
+
+/* Restore larger gallery photos on mobile only */
+@media screen and (max-width: 700px) {
+  #weddingGallery {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 0 10%;
+    scroll-snap-type: x mandatory;
+  }
+
+  #weddingGallery > .gallery-photo {
+    flex: 0 0 80%;
+    width: 80%;
+    min-width: 80%;
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: center;
+  }
+}
