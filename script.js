@@ -19,3 +19,69 @@ document.getElementById("church-map").href=wedding.churchMap;
 document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
+
+/* MOBILE GALLERY - ALWAYS START WITH PHOTO 3 */
+
+(function () {
+  const mobileScreen = window.matchMedia("(max-width: 700px)");
+
+  function centerThirdPhoto() {
+    if (!mobileScreen.matches) return;
+
+    const gallery = document.getElementById("weddingGallery");
+    if (!gallery) return;
+
+    const photos = gallery.querySelectorAll(".gallery-photo");
+    if (photos.length < 3) return;
+
+    const thirdPhoto = photos[2];
+
+    // Disable snapping temporarily
+    gallery.style.scrollSnapType = "none";
+    gallery.style.scrollBehavior = "auto";
+
+    // Calculate the position of photo 3 inside the gallery
+    const galleryRect = gallery.getBoundingClientRect();
+    const photoRect = thirdPhoto.getBoundingClientRect();
+
+    const target =
+      gallery.scrollLeft +
+      photoRect.left -
+      galleryRect.left -
+      (gallery.clientWidth - photoRect.width) / 2;
+
+    gallery.scrollLeft = target;
+
+    // Restore snapping after positioning
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        gallery.style.scrollSnapType = "";
+        gallery.style.scrollBehavior = "";
+      });
+    });
+  }
+
+  function resetGallery() {
+    if (!mobileScreen.matches) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(centerThirdPhoto);
+    });
+  }
+
+  // Fresh page load
+  window.addEventListener("load", resetGallery);
+
+  // Returning using browser back/forward
+  window.addEventListener("pageshow", resetGallery);
+
+  // Reopening a background browser tab
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) resetGallery();
+  });
+
+  // Also handle scripts loaded after page completion
+  if (document.readyState === "complete") {
+    resetGallery();
+  }
+})();
