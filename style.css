@@ -1263,7 +1263,7 @@ footer small {
   }
 
   #weddingGallery > .gallery-photo {
-    flex: 0 0 95%;
+    flex: 0 0 80%;
     width: 80%;
     min-width: 80%;
     aspect-ratio: 3 / 4;
