@@ -1164,3 +1164,67 @@ footer small {
     scroll-padding-inline: 15%;
   }
 }
+
+/* MOBILE GALLERY FIX */
+@media screen and (max-width: 700px) {
+  #weddingGallery {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 15%;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+    scrollbar-width: none;
+  }
+
+  #weddingGallery .gallery-photo {
+    flex: 0 0 70%;
+    width: 70%;
+    min-width: 70%;
+    scroll-snap-align: center;
+  }
+
+  #weddingGallery::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  #weddingGallery {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  #weddingGallery .gallery-photo {
+    flex: 0 0 70%;
+    min-width: 70%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #weddingGallery {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    gap: 12px;
+    padding: 0 15%;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+  }
+
+  #weddingGallery > .gallery-photo {
+    flex: 0 0 70%;
+    width: 70%;
+    min-width: 70%;
+    scroll-snap-align: center;
+  }
+}
