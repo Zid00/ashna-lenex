@@ -27,18 +27,3 @@ document.getElementById("church-map").href=wedding.churchMap;
 document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
-window.addEventListener("load", () => {
-  const gallery = document.querySelector(".photo-gallery");
-
-  if (gallery && window.innerWidth <= 768) {
-    const photos = gallery.querySelectorAll("img");
-    const middlePhoto = photos[2];
-
-    if (middlePhoto) {
-      gallery.scrollLeft =
-        middlePhoto.offsetLeft -
-        gallery.offsetLeft -
-        (gallery.clientWidth - middlePhoto.clientWidth) / 2;
-    }
-  }
-});
