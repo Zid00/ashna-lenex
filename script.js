@@ -28,29 +28,30 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - DEFAULT THIRD PHOTO */
+/* MOBILE GALLERY - ALWAYS START AT THE MIDDLE PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  const photos = gallery.querySelectorAll(".gallery-photo");
-  if (photos.length < 3) return;
+  let hasInitialized = false;
 
-  let initialized = false;
+  function openMiddlePhoto() {
+    if (window.innerWidth > 700 || hasInitialized) return;
 
-  function centerThirdPhoto() {
-    if (window.innerWidth > 700 || initialized) return;
+    const photos = gallery.querySelectorAll(".gallery-photo");
+    if (!photos.length) return;
 
-    const thirdPhoto = photos[2];
+    // Automatically select the middle photo
+    const middleIndex = Math.floor(photos.length / 2);
+    const middlePhoto = photos[middleIndex];
 
-    // Prevent scroll snapping during initial positioning
+    // Temporarily disable snapping while positioning
     gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
 
-    // Calculate the exact position of Photo 3
     const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = thirdPhoto.getBoundingClientRect();
+    const photoRect = middlePhoto.getBoundingClientRect();
 
     const target =
       gallery.scrollLeft +
@@ -60,19 +61,19 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
     gallery.scrollLeft = target;
 
-    // Allow the browser to settle before restoring snapping
+    // Restore normal gallery swiping
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         gallery.style.removeProperty("scroll-snap-type");
         gallery.style.removeProperty("scroll-behavior");
-        initialized = true;
+        hasInitialized = true;
       });
     });
   }
 
   function initializeGallery() {
     requestAnimationFrame(() => {
-      requestAnimationFrame(centerThirdPhoto);
+      requestAnimationFrame(openMiddlePhoto);
     });
   }
 
