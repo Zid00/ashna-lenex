@@ -1250,24 +1250,34 @@ footer small {
 }
 
 /* EXTRA LARGE MOBILE GALLERY PHOTOS */
-@media screen and (max-width: 700px) {
 
+/* FINAL MOBILE GALLERY SETTINGS */
+@media screen and (max-width: 700px) {
   #weddingGallery {
     display: flex;
     flex-wrap: nowrap;
     gap: 12px;
     width: 100%;
     overflow-x: auto;
-    padding: 0 2.5% 15px;
+    overflow-y: hidden;
+    padding: 0 5% 15px;
     scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
+    scrollbar-width: none;
   }
 
   #weddingGallery > .gallery-photo {
-    flex: 0 0 80%;
-    width: 80%;
-    min-width: 80%;
+    flex: 0 0 90%;
+    width: 90%;
+    min-width: 90%;
     aspect-ratio: 3 / 4;
     scroll-snap-align: center;
   }
+}
 
+@media (min-width: 701px) {
+  .gallery-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
 }
