@@ -6,7 +6,7 @@ const wedding = {
   ceremonyDateTime: "Saturday, 16 January 2027<br>03:30 PM",
   church: "Little Flower Church, Thirumudikkunnu",
   churchMap: " https://share.google/3DNBIu2P0LsA9tRFq",
-  receptionDateTime: "Saturday, 12 December 2026<br>1:00 PM onwards",
+  receptionDateTime: "Saturday, 16 January 2027<br>06:00 PM - 10:00 PM",
   receptionVenue: "La Mirage Hall Koratty",
   receptionMap: "https://share.google/aKKUOboqbHpjvlu7l",
   familyMessage: "Together with their families, Ashna and Lenex look forward to celebrating this special day with you."
