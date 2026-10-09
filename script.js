@@ -28,78 +28,39 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - AUTOMATIC MIDDLE PHOTO */
+/* START MOBILE GALLERY AT THE MIDDLE PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  let userInteracted = false;
-  let initialized = false;
+  const photos = [...gallery.querySelectorAll(".gallery-photo")];
+  const middle = photos[Math.floor(photos.length / 2)];
 
-  gallery.addEventListener("touchstart", () => {
-    userInteracted = true;
-  }, { passive: true });
+  if (!middle) return;
 
-  gallery.addEventListener("pointerdown", () => {
-    userInteracted = true;
-  }, { passive: true });
+  function setInitialPosition() {
+    if (!window.matchMedia("(max-width: 700px)").matches) return;
 
-  function centerMiddlePhoto() {
-    if (
-      window.innerWidth > 700 ||
-      userInteracted ||
-      initialized
-    ) return;
-
-    const photos = gallery.querySelectorAll(".gallery-photo");
-    if (!photos.length) return;
-
-    const middlePhoto = photos[Math.floor(photos.length / 2)];
-
-    // Temporarily disable scroll snapping.
+    // Keep horizontal scrolling native.
+    const oldSnap = gallery.style.scrollSnapType;
     gallery.style.scrollSnapType = "none";
-    gallery.style.scrollBehavior = "auto";
-
-    // Calculate the center position inside the gallery.
-    const galleryBox = gallery.getBoundingClientRect();
-    const photoBox = middlePhoto.getBoundingClientRect();
 
     const target =
-      gallery.scrollLeft +
-      photoBox.left -
-      galleryBox.left -
-      (gallery.clientWidth - photoBox.width) / 2;
+      middle.offsetLeft -
+      gallery.offsetLeft -
+      (gallery.clientWidth - middle.clientWidth) / 2;
 
     gallery.scrollLeft = target;
 
-    // Restore native swipe and snap functionality.
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        gallery.style.removeProperty("scroll-snap-type");
-        gallery.style.removeProperty("scroll-behavior");
-        initialized = true;
-      });
+      gallery.style.scrollSnapType = oldSnap;
     });
   }
 
-  function initializeGallery() {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(centerMiddlePhoto);
-    });
-  }
+  // Apply before images finish loading.
+  setInitialPosition();
 
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      initializeGallery,
-      { once: true }
-    );
-  } else {
-    initializeGallery();
-  }
-
-  window.addEventListener("load", initializeGallery, {
-    once: true
-  });
+  // Apply once more when the page finishes loading.
+  window.addEventListener("load", setInitialPosition, { once: true });
 })();
