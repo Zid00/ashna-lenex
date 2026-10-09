@@ -1134,3 +1134,15 @@ footer small {
   }
 }
 
+@media (max-width: 700px) {
+  .gallery-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .gallery-photo {
+    flex: 0 0 70%;
+    scroll-snap-align: center;
+  }
+}
