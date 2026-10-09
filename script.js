@@ -28,7 +28,7 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - START AT MIDDLE PHOTO */
+/* MOBILE GALLERY - DEFAULT THIRD PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
@@ -37,43 +37,48 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
   const photos = gallery.querySelectorAll(".gallery-photo");
   if (photos.length < 3) return;
 
-  const middlePhoto = photos[2];
+  let initialized = false;
 
-  function showMiddlePhoto() {
-    if (window.innerWidth > 700) return;
+  function centerThirdPhoto() {
+    if (window.innerWidth > 700 || initialized) return;
 
-    // Temporarily prevent snapping to Photo 1.
-    const previousSnap = gallery.style.scrollSnapType;
+    const thirdPhoto = photos[2];
+
+    // Prevent scroll snapping during initial positioning
     gallery.style.scrollSnapType = "none";
+    gallery.style.scrollBehavior = "auto";
 
-    const galleryBox = gallery.getBoundingClientRect();
-    const photoBox = middlePhoto.getBoundingClientRect();
+    // Calculate the exact position of Photo 3
+    const galleryRect = gallery.getBoundingClientRect();
+    const photoRect = thirdPhoto.getBoundingClientRect();
 
     const target =
       gallery.scrollLeft +
-      photoBox.left -
-      galleryBox.left -
-      (gallery.clientWidth - photoBox.width) / 2;
+      photoRect.left -
+      galleryRect.left -
+      (gallery.clientWidth - photoRect.width) / 2;
 
-    // Position Photo 3 immediately, without animation.
     gallery.scrollLeft = target;
 
+    // Allow the browser to settle before restoring snapping
     requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = previousSnap;
+      requestAnimationFrame(() => {
+        gallery.style.removeProperty("scroll-snap-type");
+        gallery.style.removeProperty("scroll-behavior");
+        initialized = true;
+      });
     });
   }
 
-  function initialize() {
+  function initializeGallery() {
     requestAnimationFrame(() => {
-      requestAnimationFrame(showMiddlePhoto);
+      requestAnimationFrame(centerThirdPhoto);
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialize, { once: true });
+  if (document.readyState === "complete") {
+    initializeGallery();
   } else {
-    initialize();
+    window.addEventListener("load", initializeGallery, { once: true });
   }
-
-  window.addEventListener("load", initialize, { once: true });
 })();
