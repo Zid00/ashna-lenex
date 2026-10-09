@@ -1068,3 +1068,21 @@ footer small {
     -webkit-user-drag: none;
   }
 }
+
+/* MOBILE GALLERY - INITIAL MIDDLE PHOTO */
+
+@media screen and (max-width: 700px) {
+  #weddingGallery {
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 5%;
+    touch-action: pan-x pan-y;
+  }
+
+  #weddingGallery > .gallery-photo {
+    scroll-snap-align: center;
+  }
+
+  #weddingGallery > .gallery-photo:nth-child(3) {
+    scroll-start-target: auto;
+  }
+}
