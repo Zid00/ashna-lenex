@@ -1142,3 +1142,32 @@ footer small {
   }
 
 }
+
+/* FIX WHITE AREA IN LAPTOP PHOTO GALLERY */
+
+@media screen and (min-width: 701px) {
+
+  .wedding-gallery {
+    background: transparent;
+    overflow: hidden;
+  }
+
+  #weddingGallery {
+    background: transparent;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  #weddingGallery > .gallery-photo {
+    background: transparent;
+    flex-shrink: 0;
+  }
+
+  #weddingGallery .gallery-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+}
