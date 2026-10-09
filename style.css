@@ -1249,10 +1249,10 @@ footer small {
   #weddingGallery > .gallery-photo {
     display: block !important;
 
-    flex: 0 0 84% !important;
-    width: 84% !important;
-    min-width: 84% !important;
-    max-width: 84% !important;
+    flex: 0 0 90% !important;
+    width: 90% !important;
+    min-width: 90% !important;
+    max-width: 90% !important;
 
     aspect-ratio: 3 / 4;
     overflow: hidden;
