@@ -29,49 +29,39 @@ setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.b
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
 
-
-/* OPEN MOBILE GALLERY AT PHOTO 3 */
-
-(function () {
+// Open the mobile wedding gallery at the third photo
+window.addEventListener("load", function () {
   const gallery = document.getElementById("weddingGallery");
-
   if (!gallery) return;
 
   const photos = gallery.querySelectorAll(".gallery-photo");
-
   if (photos.length < 3) return;
 
-  function centerPhoto3() {
+  function centerThirdPhoto() {
     if (window.innerWidth > 700) return;
 
-    const photo = photos[2];
-
-    // Calculate Photo 3's position inside the gallery.
-    const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = photo.getBoundingClientRect();
+    const thirdPhoto = photos[2];
 
     const target =
-      gallery.scrollLeft +
-      photoRect.left -
-      galleryRect.left -
-      (gallery.clientWidth - photoRect.width) / 2;
+      thirdPhoto.offsetLeft -
+      gallery.offsetLeft -
+      (gallery.clientWidth - thirdPhoto.clientWidth) / 2;
 
-    // Center immediately, without an opening animation.
-    gallery.style.scrollSnapType = "none";
-    gallery.style.scrollBehavior = "auto";
-    gallery.scrollLeft = target;
-
-    requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = "x mandatory";
-      gallery.style.scrollBehavior = "smooth";
+    gallery.scrollTo({
+      left: Math.max(0, target),
+      behavior: "instant"
     });
   }
 
-  if (document.readyState === "complete") {
-    centerPhoto3();
-  } else {
-    window.addEventListener("load", centerPhoto3, {
-      once: true
-    });
-  }
-})();
+  // Allow layout to finish before centering
+  requestAnimationFrame(() => {
+    requestAnimationFrame(centerThirdPhoto);
+  });
+
+  // Recenter after images finish loading
+  gallery.querySelectorAll("img").forEach((img) => {
+    if (!img.complete) {
+      img.addEventListener("load", centerThirdPhoto, { once: true });
+    }
+  });
+});
