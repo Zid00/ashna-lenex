@@ -1248,3 +1248,26 @@ footer small {
     scroll-snap-align: center;
   }
 }
+
+/* EXTRA LARGE MOBILE GALLERY PHOTOS */
+@media screen and (max-width: 700px) {
+
+  #weddingGallery {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 2.5% 15px;
+    scroll-snap-type: x mandatory;
+  }
+
+  #weddingGallery > .gallery-photo {
+    flex: 0 0 95%;
+    width: 95%;
+    min-width: 95%;
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: center;
+  }
+
+}
