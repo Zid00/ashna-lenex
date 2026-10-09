@@ -1059,5 +1059,15 @@ footer small {
     visibility: visible;
     user-select: none;
     -webkit-user-drag: none;
+ 
+}
+}
+@media (max-width: 700px) {
+  #weddingGallery:not(.gallery-ready) {
+    visibility: hidden;
+  }
+
+  #weddingGallery.gallery-ready {
+    visibility: visible;
   }
 }

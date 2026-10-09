@@ -28,57 +28,65 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* ========================================
-   MOBILE GALLERY - PHOTO 3 BY DEFAULT
-======================================== */
+/* MOBILE GALLERY - OPEN AT PHOTO 3 */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
-
   if (!gallery) return;
 
   const photos = gallery.querySelectorAll(".gallery-photo");
-
-  // Index 2 means the third photo
   const middlePhoto = photos[2];
 
-  if (!middlePhoto) return;
+  if (!middlePhoto) {
+    gallery.classList.add("gallery-ready");
+    return;
+  }
 
-  function centerMiddlePhoto() {
-    // Only apply to mobile screens
-    if (window.innerWidth > 700) return;
+  function centerPhoto() {
+    if (window.innerWidth > 700) {
+      gallery.classList.add("gallery-ready");
+      return;
+    }
 
-    // Disable snapping while setting the position
+    gallery.classList.remove("gallery-ready");
+
+    const oldSnap = gallery.style.scrollSnapType;
+    const oldBehavior = gallery.style.scrollBehavior;
+
     gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
 
-    // Calculate exact center position
-    const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = middlePhoto.getBoundingClientRect();
+    // Use positions relative to the scroll container.
+    const galleryBox = gallery.getBoundingClientRect();
+    const photoBox = middlePhoto.getBoundingClientRect();
 
-    const targetScroll =
+    const target =
       gallery.scrollLeft +
-      photoRect.left -
-      galleryRect.left -
-      (gallery.clientWidth - photoRect.width) / 2;
+      photoBox.left -
+      galleryBox.left -
+      (gallery.clientWidth - photoBox.width) / 2;
 
-    // Move gallery to the third photo
-    gallery.scrollLeft = targetScroll;
+    gallery.scrollLeft = target;
 
-    // Restore normal swipe behavior
     requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = "";
-      gallery.style.scrollBehavior = "";
+      gallery.style.scrollSnapType = oldSnap;
+      gallery.style.scrollBehavior = oldBehavior;
+      gallery.classList.add("gallery-ready");
     });
   }
 
-  // Run when page finishes loading
-  window.addEventListener("load", () => {
+  function initializeGallery() {
+    // Wait for the browser to finish laying out the photos.
     requestAnimationFrame(() => {
-      requestAnimationFrame(centerMiddlePhoto);
+      requestAnimationFrame(centerPhoto);
     });
-  });
+  }
 
-  // Handle pages restored from browser cache
-  window.addEventListener("pageshow", centerMiddlePhoto);
+  if (document.readyState === "complete") {
+    initializeGallery();
+  } else {
+    window.addEventListener("load", initializeGallery, { once: true });
+  }
+
+  window.addEventListener("pageshow", initializeGallery);
 })();
