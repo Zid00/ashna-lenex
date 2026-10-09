@@ -12,7 +12,15 @@ const wedding = {
   familyMessage: "Together with their families, Ashna and Lenex look forward to celebrating this special day with you."
 };
 const setText = (id, value) => document.getElementById(id).textContent = value;
-const setLines = (id, value) => { const el=document.getElementById(id); value.split("<br>").forEach((part,i)=>{if(i)el.append(document.createElement("br"));el.append(document.createTextNode(part));}); };
+const setLines = (id, value) => {
+  const el = document.getElementById(id);
+  el.replaceChildren();
+
+  value.split("<br>").forEach((part, i) => {
+    if (i) el.append(document.createElement("br"));
+    el.append(document.createTextNode(part));
+  });
+};
 setText("bride",wedding.bride);setText("groom",wedding.groom);setText("hero-date",wedding.weddingDate);
 ["ceremony-time","church","reception-time","venue"].forEach((id,i)=>setLines(id,[wedding.ceremonyDateTime,wedding.church,wedding.receptionDateTime,wedding.receptionVenue][i]));
 document.getElementById("church-map").href=wedding.churchMap;
@@ -21,28 +29,54 @@ setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.b
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
 
-/* Default gallery photo - mobile only */
 
-function showThirdPhoto() {
-  if (window.innerWidth > 700) return;
+/* Mobile gallery: start with the third photo centered */
 
-  const gallery = document.querySelector("#weddingGallery");
-  const thirdPhoto = gallery?.children[2];
+(() => {
+  const mobile = window.matchMedia("(max-width: 700px)");
 
-  if (!gallery || !thirdPhoto) return;
+  function centerThirdPhoto() {
+    if (!mobile.matches) return;
 
-  const target =
-    thirdPhoto.offsetLeft -
-    gallery.offsetLeft -
-    (gallery.offsetWidth - thirdPhoto.offsetWidth) / 2;
+    const gallery = document.getElementById("weddingGallery");
+    if (!gallery) return;
 
-  gallery.scrollLeft = target;
-}
+    const thirdPhoto = gallery.querySelectorAll(".gallery-photo")[2];
+    if (!thirdPhoto) return;
 
-window.addEventListener("load", () => {
-  setTimeout(showThirdPhoto, 300);
-});
+    // Disable scroll snapping during initial positioning
+    gallery.style.scrollSnapType = "none";
+    gallery.style.scrollBehavior = "auto";
 
-window.addEventListener("pageshow", () => {
-  setTimeout(showThirdPhoto, 300);
-});
+    const galleryBox = gallery.getBoundingClientRect();
+    const photoBox = thirdPhoto.getBoundingClientRect();
+
+    const target =
+      gallery.scrollLeft +
+      photoBox.left -
+      galleryBox.left -
+      (gallery.clientWidth - photoBox.width) / 2;
+
+    gallery.scrollLeft = target;
+
+    requestAnimationFrame(() => {
+      gallery.style.scrollSnapType = "";
+      gallery.style.scrollBehavior = "";
+    });
+  }
+
+  function initializeGallery() {
+    if (!mobile.matches) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(centerThirdPhoto);
+    });
+  }
+
+  window.addEventListener("load", initializeGallery);
+  window.addEventListener("pageshow", initializeGallery);
+
+  if (document.readyState === "complete") {
+    initializeGallery();
+  }
+})();

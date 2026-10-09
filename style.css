@@ -1159,3 +1159,8 @@ footer small {
     scroll-snap-align: center;
   }
 }
+@media (max-width: 700px) {
+  #weddingGallery {
+    scroll-padding-inline: 15%;
+  }
+}
