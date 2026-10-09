@@ -2,10 +2,10 @@
 const wedding = {
   bride: "Ashna",
   groom: "Lenex",
-  weddingDate: " SATURDAY · 16th JANUARY 2027",
+  weddingDate: "SATURDAY · 16th JANUARY 2027",
   ceremonyDateTime: "Saturday, 16 January 2027<br>03:30 PM",
   church: "Little Flower Church, Thirumudikkunnu",
-  churchMap: " https://share.google/3DNBIu2P0LsA9tRFq",
+  churchMap: "https://share.google/3DNBIu2P0LsA9tRFq",
   receptionDateTime: "Saturday, 16 January 2027<br>06:00 PM - 10:00 PM",
   receptionVenue: "La Mirage Hall Koratty",
   receptionMap: "https://share.google/aKKUOboqbHpjvlu7l",
@@ -29,9 +29,7 @@ setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.b
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
 
-/* Start mobile gallery on the third photo */
-
-/* Default mobile gallery: center the third photo */
+/* Center the third gallery photo on mobile */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
