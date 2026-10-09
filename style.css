@@ -992,8 +992,7 @@ footer small {
   }
 }
 
-
-/* FINAL MOBILE PHOTO GALLERY */
+/* MOBILE PHOTO GALLERY — CENTER PHOTO 3 */
 
 @media screen and (max-width: 700px) {
 
@@ -1003,34 +1002,28 @@ footer small {
     overflow: hidden;
   }
 
-  .gallery-heading {
-    text-align: center;
-    padding: 0 20px;
-    margin-bottom: 30px;
-  }
-
   #weddingGallery {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 12px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
 
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0 5% 15px;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 
-    overflow-x: auto;
-    overflow-y: hidden;
+    gap: 12px !important;
+    padding: 0 12% 15px !important;
+    margin: 0 !important;
 
-    touch-action: pan-x pan-y;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
 
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 5%;
-    scroll-behavior: auto;
+    scroll-padding-inline: 12%;
+    scroll-behavior: smooth;
 
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
@@ -1039,17 +1032,18 @@ footer small {
   }
 
   #weddingGallery > .gallery-photo {
-    display: block;
-    position: relative;
+    display: block !important;
 
-    flex: 0 0 90%;
-    width: 90%;
-    min-width: 90%;
+    flex: 0 0 76% !important;
+    width: 76% !important;
+    min-width: 76% !important;
+    max-width: 76% !important;
 
     aspect-ratio: 3 / 4;
     overflow: hidden;
 
     scroll-snap-align: center;
+    scroll-snap-stop: always;
   }
 
   #weddingGallery .gallery-photo img {
@@ -1061,11 +1055,6 @@ footer small {
     object-position: center;
 
     opacity: 1;
-    visibility: visible;
-
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
   }
 }
 
@@ -1265,4 +1254,30 @@ footer small {
     height: 100%;
     object-fit: cover;
   }
+}
+/* MOBILE HERO NAMES - VERTICAL */
+
+@media screen and (max-width: 700px) {
+
+  .hero h1 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+    margin: 25px 0 34px;
+
+    font-size: clamp(70px, 16vw, 100px);
+    line-height: 0.95;
+    text-align: center;
+  }
+
+  .hero h1 em {
+    font-size: 0.45em;
+    line-height: 1;
+    margin: 8px 0;
+  }
+
 }

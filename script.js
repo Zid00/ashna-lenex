@@ -27,3 +27,51 @@ document.getElementById("church-map").href=wedding.churchMap;
 document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
+
+
+
+/* OPEN MOBILE GALLERY AT PHOTO 3 */
+
+(function () {
+  const gallery = document.getElementById("weddingGallery");
+
+  if (!gallery) return;
+
+  const photos = gallery.querySelectorAll(".gallery-photo");
+
+  if (photos.length < 3) return;
+
+  function centerPhoto3() {
+    if (window.innerWidth > 700) return;
+
+    const photo = photos[2];
+
+    // Calculate Photo 3's position inside the gallery.
+    const galleryRect = gallery.getBoundingClientRect();
+    const photoRect = photo.getBoundingClientRect();
+
+    const target =
+      gallery.scrollLeft +
+      photoRect.left -
+      galleryRect.left -
+      (gallery.clientWidth - photoRect.width) / 2;
+
+    // Center immediately, without an opening animation.
+    gallery.style.scrollSnapType = "none";
+    gallery.style.scrollBehavior = "auto";
+    gallery.scrollLeft = target;
+
+    requestAnimationFrame(() => {
+      gallery.style.scrollSnapType = "x mandatory";
+      gallery.style.scrollBehavior = "smooth";
+    });
+  }
+
+  if (document.readyState === "complete") {
+    centerPhoto3();
+  } else {
+    window.addEventListener("load", centerPhoto3, {
+      once: true
+    });
+  }
+})();
