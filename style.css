@@ -1068,13 +1068,3 @@ footer small {
     -webkit-user-drag: none;
   }
 }
-@media (max-width: 700px) {
-  #weddingGallery:not(.gallery-initialized) {
-    visibility: hidden !important;
-    scroll-snap-type: none !important;
-  }
-
-  #weddingGallery.gallery-initialized {
-    visibility: visible !important;
-  }
-}
