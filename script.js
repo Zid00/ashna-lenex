@@ -28,11 +28,17 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - OPEN AT CENTER PHOTO */
+/* MOBILE GALLERY - OPEN WITH MIDDLE PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
+
+  const photos = Array.from(
+    gallery.querySelectorAll(".gallery-photo")
+  );
+
+  if (photos.length === 0) return;
 
   let userInteracted = false;
 
@@ -47,32 +53,50 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
   function centerMiddlePhoto() {
     if (window.innerWidth > 700 || userInteracted) return;
 
-    const photos = gallery.querySelectorAll(".gallery-photo");
-    if (!photos.length) return;
-
     const middleIndex = Math.floor(photos.length / 2);
     const middlePhoto = photos[middleIndex];
 
-    // Directly center the middle photo.
-    middlePhoto.scrollIntoView({
-      behavior: "instant",
-      block: "nearest",
-      inline: "center"
+    // Calculate the center of the third photo.
+    const galleryRect = gallery.getBoundingClientRect();
+    const photoRect = middlePhoto.getBoundingClientRect();
+
+    const target =
+      gallery.scrollLeft +
+      photoRect.left -
+      galleryRect.left -
+      (gallery.clientWidth - photoRect.width) / 2;
+
+    // Temporarily disable snapping.
+    gallery.style.scrollSnapType = "none";
+    gallery.style.scrollBehavior = "auto";
+
+    gallery.scrollLeft = target;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        gallery.style.removeProperty("scroll-snap-type");
+        gallery.style.removeProperty("scroll-behavior");
+      });
     });
   }
 
-  // Position gallery after page layout.
-  function initialize() {
+  function initializeGallery() {
     requestAnimationFrame(() => {
       requestAnimationFrame(centerMiddlePhoto);
     });
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialize);
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeGallery,
+      { once: true }
+    );
   } else {
-    initialize();
+    initializeGallery();
   }
 
-  window.addEventListener("load", initialize, { once: true });
+  window.addEventListener("load", initializeGallery, {
+    once: true
+  });
 })();
