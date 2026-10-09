@@ -28,37 +28,53 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* Show the third photo by default on mobile */
+/* DEFAULT MOBILE GALLERY - CENTER PHOTO 3 */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
+
   if (!gallery) return;
 
-  function centerThirdPhoto() {
+  const photos = gallery.querySelectorAll(".gallery-photo");
+  const middlePhoto = photos[2];
+
+  if (!middlePhoto) return;
+
+  function centerMiddlePhoto() {
+    // Apply only on mobile
     if (window.innerWidth > 700) return;
 
-    const thirdPhoto = gallery.querySelectorAll(".gallery-photo")[2];
-    if (!thirdPhoto) return;
-
-    const previousSnap = gallery.style.scrollSnapType;
+    // Disable snapping temporarily
     gallery.style.scrollSnapType = "none";
+    gallery.style.scrollBehavior = "auto";
 
+    // Calculate the middle photo's position
     const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = thirdPhoto.getBoundingClientRect();
+    const photoRect = middlePhoto.getBoundingClientRect();
 
-    const target =
+    const targetScroll =
       gallery.scrollLeft +
       photoRect.left -
       galleryRect.left -
       (gallery.clientWidth - photoRect.width) / 2;
 
-    gallery.scrollLeft = target;
+    // Display photo 3 in the center
+    gallery.scrollLeft = targetScroll;
 
+    // Restore normal horizontal swiping
     requestAnimationFrame(() => {
-      gallery.style.scrollSnapType = previousSnap;
+      gallery.style.scrollSnapType = "";
+      gallery.style.scrollBehavior = "";
     });
   }
 
-  window.addEventListener("load", centerThirdPhoto);
-  window.addEventListener("pageshow", centerThirdPhoto);
+  // Center when website first opens
+  if (document.readyState === "complete") {
+    centerMiddlePhoto();
+  } else {
+    window.addEventListener("load", centerMiddlePhoto);
+  }
+
+  // Center when page is restored
+  window.addEventListener("pageshow", centerMiddlePhoto);
 })();
