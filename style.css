@@ -1117,22 +1117,28 @@ footer small {
 
 #weddingGallery .gallery-photo img {
   display: block;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   pointer-events: none;
 }
 
-/* Comfortable image size on laptops */
-@media (min-width: 701px) {
+/* LAPTOP GALLERY - SMALLER PHOTOS */
+
+@media screen and (min-width: 701px) {
+
   #weddingGallery > .gallery-photo {
-    flex-basis: min(55vw, 650px);
-    width: min(55vw, 650px);
-    min-width: min(55vw, 650px);
+    flex: 0 0 350px;
+    width: 350px;
+    min-width: 350px;
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: center;
   }
 
   #weddingGallery {
-    padding-inline: max(5%, calc((100% - min(55vw, 650px)) / 2));
-    scroll-padding-inline: 0;
+    padding-left: calc((100% - 350px) / 2);
+    padding-right: calc((100% - 350px) / 2);
+    gap: 16px;
   }
+
 }
