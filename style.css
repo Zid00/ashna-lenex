@@ -276,8 +276,6 @@ a {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 15px;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -290,7 +288,6 @@ a {
   position: relative;
   width: 100%;
   min-width: 0;
-  aspect-ratio: 3 / 4;
   overflow: hidden;
 }
 
@@ -302,7 +299,6 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.85;
 
   -webkit-mask-image: radial-gradient(
     ellipse at center,
@@ -1131,18 +1127,5 @@ footer small {
 
   .developer-whatsapp span {
     font-size: 10px;
-  }
-}
-
-@media (max-width: 700px) {
-  .gallery-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
-
-  .gallery-photo {
-    flex: 0 0 70%;
-    scroll-snap-align: center;
   }
 }
