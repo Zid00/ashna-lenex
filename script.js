@@ -20,68 +20,29 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - ALWAYS START WITH PHOTO 3 */
 
-(function () {
-  const mobileScreen = window.matchMedia("(max-width: 700px)");
+/* Default gallery photo - mobile only */
 
-  function centerThirdPhoto() {
-    if (!mobileScreen.matches) return;
+function showThirdPhoto() {
+  if (window.innerWidth > 700) return;
 
-    const gallery = document.getElementById("weddingGallery");
-    if (!gallery) return;
+  const gallery = document.querySelector("#weddingGallery");
+  const thirdPhoto = gallery?.children[2];
 
-    const photos = gallery.querySelectorAll(".gallery-photo");
-    if (photos.length < 3) return;
+  if (!gallery || !thirdPhoto) return;
 
-    const thirdPhoto = photos[2];
+  const target =
+    thirdPhoto.offsetLeft -
+    gallery.offsetLeft -
+    (gallery.offsetWidth - thirdPhoto.offsetWidth) / 2;
 
-    // Disable snapping temporarily
-    gallery.style.scrollSnapType = "none";
-    gallery.style.scrollBehavior = "auto";
+  gallery.scrollLeft = target;
+}
 
-    // Calculate the position of photo 3 inside the gallery
-    const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = thirdPhoto.getBoundingClientRect();
+window.addEventListener("load", () => {
+  setTimeout(showThirdPhoto, 300);
+});
 
-    const target =
-      gallery.scrollLeft +
-      photoRect.left -
-      galleryRect.left -
-      (gallery.clientWidth - photoRect.width) / 2;
-
-    gallery.scrollLeft = target;
-
-    // Restore snapping after positioning
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        gallery.style.scrollSnapType = "";
-        gallery.style.scrollBehavior = "";
-      });
-    });
-  }
-
-  function resetGallery() {
-    if (!mobileScreen.matches) return;
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(centerThirdPhoto);
-    });
-  }
-
-  // Fresh page load
-  window.addEventListener("load", resetGallery);
-
-  // Returning using browser back/forward
-  window.addEventListener("pageshow", resetGallery);
-
-  // Reopening a background browser tab
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) resetGallery();
-  });
-
-  // Also handle scripts loaded after page completion
-  if (document.readyState === "complete") {
-    resetGallery();
-  }
-})();
+window.addEventListener("pageshow", () => {
+  setTimeout(showThirdPhoto, 300);
+});

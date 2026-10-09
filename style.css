@@ -1142,3 +1142,20 @@ footer small {
     scroll-snap-align: center;
   }
 }
+
+/* Center the third photo by default on mobile */
+
+@media (max-width: 700px) {
+  .gallery-grid {
+    scroll-behavior: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .gallery-photo {
+    scroll-snap-align: center;
+  }
+
+  .gallery-photo:nth-child(3) {
+    scroll-snap-align: center;
+  }
+}
