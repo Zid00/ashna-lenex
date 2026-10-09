@@ -28,19 +28,14 @@ document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
 
-/* MOBILE GALLERY - OPEN WITH MIDDLE PHOTO */
+/* MOBILE GALLERY - AUTOMATIC MIDDLE PHOTO */
 
 (() => {
   const gallery = document.getElementById("weddingGallery");
   if (!gallery) return;
 
-  const photos = Array.from(
-    gallery.querySelectorAll(".gallery-photo")
-  );
-
-  if (photos.length === 0) return;
-
   let userInteracted = false;
+  let initialized = false;
 
   gallery.addEventListener("touchstart", () => {
     userInteracted = true;
@@ -51,31 +46,39 @@ document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
   }, { passive: true });
 
   function centerMiddlePhoto() {
-    if (window.innerWidth > 700 || userInteracted) return;
+    if (
+      window.innerWidth > 700 ||
+      userInteracted ||
+      initialized
+    ) return;
 
-    const middleIndex = Math.floor(photos.length / 2);
-    const middlePhoto = photos[middleIndex];
+    const photos = gallery.querySelectorAll(".gallery-photo");
+    if (!photos.length) return;
 
-    // Calculate the center of the third photo.
-    const galleryRect = gallery.getBoundingClientRect();
-    const photoRect = middlePhoto.getBoundingClientRect();
+    const middlePhoto = photos[Math.floor(photos.length / 2)];
 
-    const target =
-      gallery.scrollLeft +
-      photoRect.left -
-      galleryRect.left -
-      (gallery.clientWidth - photoRect.width) / 2;
-
-    // Temporarily disable snapping.
+    // Temporarily disable scroll snapping.
     gallery.style.scrollSnapType = "none";
     gallery.style.scrollBehavior = "auto";
 
+    // Calculate the center position inside the gallery.
+    const galleryBox = gallery.getBoundingClientRect();
+    const photoBox = middlePhoto.getBoundingClientRect();
+
+    const target =
+      gallery.scrollLeft +
+      photoBox.left -
+      galleryBox.left -
+      (gallery.clientWidth - photoBox.width) / 2;
+
     gallery.scrollLeft = target;
 
+    // Restore native swipe and snap functionality.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         gallery.style.removeProperty("scroll-snap-type");
         gallery.style.removeProperty("scroll-behavior");
+        initialized = true;
       });
     });
   }

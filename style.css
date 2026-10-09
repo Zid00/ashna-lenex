@@ -992,9 +992,8 @@ footer small {
   }
 }
 
-/* ========================================
-   FINAL MOBILE GALLERY SETTINGS
-======================================== */
+
+/* FINAL MOBILE PHOTO GALLERY */
 
 @media screen and (max-width: 700px) {
 
@@ -1016,7 +1015,7 @@ footer small {
     flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 12px;
-    scroll-padding-inline: 5%;
+
     width: 100%;
     max-width: 100%;
     margin: 0;
@@ -1025,10 +1024,13 @@ footer small {
     overflow-x: auto;
     overflow-y: hidden;
 
-    scroll-snap-type: x mandatory;
-    scroll-behavior: auto;
+    touch-action: pan-x pan-y;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
+
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 5%;
+    scroll-behavior: auto;
+
     scrollbar-width: none;
   }
 
@@ -1046,6 +1048,7 @@ footer small {
 
     aspect-ratio: 3 / 4;
     overflow: hidden;
+
     scroll-snap-align: center;
   }
 
@@ -1053,135 +1056,15 @@ footer small {
     display: block;
     width: 100%;
     height: 100%;
+
     object-fit: cover;
     object-position: center;
+
     opacity: 1;
     visibility: visible;
+
+    pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
- 
-}
-}
-@media (max-width: 700px) {
-  #weddingGallery:not(.gallery-ready) {
-    visibility: hidden;
-  }
-
-  #weddingGallery.gallery-ready {
-    visibility: visible;
-  }
-}
-
-/* MOBILE GALLERY - HORIZONTAL SWIPING */
-
-@media screen and (max-width: 700px) {
-
-  #weddingGallery {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 12px;
-
-    width: 100%;
-    max-width: 100%;
-    padding: 0 5% 15px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    touch-action: pan-x pan-y;
-    -webkit-overflow-scrolling: touch;
-
-    scroll-snap-type: x mandatory;
-    scroll-behavior: auto;
-
-    scrollbar-width: none;
-  }
-
-  #weddingGallery::-webkit-scrollbar {
-    display: none;
-  }
-
-  #weddingGallery > .gallery-photo {
-    flex: 0 0 90%;
-    width: 90%;
-    min-width: 90%;
-    aspect-ratio: 3 / 4;
-    scroll-snap-align: center;
-    overflow: hidden;
-  }
-
-  #weddingGallery .gallery-photo img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-/* MOBILE GALLERY - RESTORE SWIPING */
-
-@media screen and (max-width: 700px) {
-  .wedding-gallery {
-    overflow: hidden;
-  }
-
-  #weddingGallery {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 12px;
-
-    width: 100%;
-    max-width: 100%;
-    padding: 0 5% 15px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    touch-action: pan-x pan-y;
-    -webkit-overflow-scrolling: touch;
-
-    scroll-snap-type: x mandatory;
-    scroll-behavior: auto;
-    scrollbar-width: none;
-
-    visibility: visible !important;
-  }
-
-  #weddingGallery::-webkit-scrollbar {
-    display: none;
-  }
-
-  #weddingGallery > .gallery-photo {
-    display: block;
-    flex: 0 0 90%;
-    width: 90%;
-    min-width: 90%;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    scroll-snap-align: center;
-  }
-
-  #weddingGallery .gallery-photo img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-  }
-}
-
-@media screen and (max-width: 700px) {
-  #weddingGallery {
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 5%;
-    touch-action: pan-x pan-y;
-  }
-
-  #weddingGallery > .gallery-photo {
-    scroll-snap-align: center;
   }
 }
