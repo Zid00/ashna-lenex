@@ -3,7 +3,7 @@ const wedding = {
   bride: "Ashna",
   groom: "Lenex",
   weddingDate: " SATURDAY · 16th JANUARY 2027",
-  ceremonyTime: "11:00 AM",
+  ceremonyDateTime: "Saturday, 16 January 2027<br>03:30 PM",
   church: "Little Flower Church, Thirumudikkunnu",
   churchMap: " https://share.google/3DNBIu2P0LsA9tRFq",
   receptionDateTime: "Saturday, 12 December 2026<br>1:00 PM onwards",
@@ -19,100 +19,3 @@ document.getElementById("church-map").href=wedding.churchMap;
 document.getElementById("venue-map").href=wedding.receptionMap;
 setText("family-text",wedding.familyMessage);setText("footer-names",`${wedding.bride.toUpperCase()} & ${wedding.groom.toUpperCase()}`);
 document.title=`${wedding.bride} & ${wedding.groom} | Wedding Invitation`;
-
-/* Show third photo first on mobile */
-
-window.addEventListener("load", () => {
-  const gallery = document.getElementById("weddingGallery");
-
-  if (!gallery || window.innerWidth > 700) return;
-
-  const photos = gallery.querySelectorAll(".gallery-photo");
-  const thirdPhoto = photos[2];
-
-  if (!thirdPhoto) return;
-
-  // Position the third photo in the center
-  const scrollPosition =
-    thirdPhoto.offsetLeft -
-    gallery.offsetLeft -
-    (gallery.clientWidth - thirdPhoto.clientWidth) / 2;
-
-  gallery.scrollTo({
-    left: scrollPosition,
-    behavior: "instant"
-  });
-});
-
-
-/* Center third photo when website opens */
-
-function centerDefaultPhoto() {
-  const gallery = document.getElementById("weddingGallery");
-
-  if (!gallery || window.innerWidth > 700) return;
-
-  const photos = gallery.querySelectorAll(".gallery-photo");
-  const thirdPhoto = photos[2];
-
-  if (!thirdPhoto) return;
-
-  // Calculate exact horizontal center
-  const galleryRect = gallery.getBoundingClientRect();
-  const photoRect = thirdPhoto.getBoundingClientRect();
-
-  const targetScroll =
-    gallery.scrollLeft +
-    (photoRect.left - galleryRect.left) -
-    (gallery.clientWidth - photoRect.width) / 2;
-
-  gallery.scrollTo({
-    left: targetScroll,
-    behavior: "instant"
-  });
-}
-
-if (document.readyState === "complete") {
-  centerDefaultPhoto();
-} else {
-  window.addEventListener("load", centerDefaultPhoto);
-}
-
-
-
-/* Always center the third photo on mobile */
-
-function resetMobileGallery() {
-  const gallery = document.getElementById("weddingGallery");
-
-  // Mobile only
-  if (!gallery || window.innerWidth > 700) return;
-
-  const photos = gallery.querySelectorAll(".gallery-photo");
-  const thirdPhoto = photos[2];
-
-  if (!thirdPhoto) return;
-
-  const galleryRect = gallery.getBoundingClientRect();
-  const photoRect = thirdPhoto.getBoundingClientRect();
-
-  const centerPosition =
-    gallery.scrollLeft +
-    photoRect.left -
-    galleryRect.left -
-    (gallery.clientWidth - photoRect.width) / 2;
-
-  // Instantly center the third photo
-  gallery.scrollTo({
-    left: centerPosition,
-    behavior: "instant"
-  });
-}
-
-// When the page first loads
-window.addEventListener("load", resetMobileGallery);
-
-// When the page is reopened or restored from browser cache
-window.addEventListener("pageshow", () => {
-  requestAnimationFrame(resetMobileGallery);
-});
