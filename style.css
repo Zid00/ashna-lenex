@@ -1332,3 +1332,63 @@ footer small {
 
 
 
+/* PREMIUM WEDDING COUNTDOWN */
+
+.wedding-countdown {
+  background: #faf9f6;
+  padding: 60px 20px;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.countdown-item {
+  flex: 1;
+  text-align: center;
+}
+
+.countdown-item span {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 60px;
+  font-weight: 400;
+  color: #34493c;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-item small {
+  display: block;
+  margin-top: 12px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #777c75;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .wedding-countdown {
+    padding: 45px 12px;
+  }
+
+  .countdown-container {
+    gap: 8px;
+  }
+
+  .countdown-item span {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+
+  .countdown-item small {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+}
