@@ -65,36 +65,39 @@ window.addEventListener("load", function () {
     }
   });
 });
+// WEDDING COUNTDOWN — 16 JANUARY 2027, 3:30 PM IST
+(function () {
+  const target = new Date("2027-01-16T15:30:00+05:30").getTime();
 
-// LIVE WEDDING COUNTDOWN
-// 16 January 2027, 3:30 PM India time
+  function updateCountdown() {
+    const daysEl = document.getElementById("countDays");
+    const hoursEl = document.getElementById("countHours");
+    const minutesEl = document.getElementById("countMinutes");
+    const secondsEl = document.getElementById("countSeconds");
 
-const weddingCountdownDate =
-  new Date("2027-01-16T15:30:00+05:30").getTime();
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+      console.error("Wedding countdown HTML elements are missing.");
+      return;
+    }
 
-function updateWeddingCountdown() {
-  const remaining = Math.max(
-    0,
-    weddingCountdownDate - Date.now()
-  );
+    const remaining = Math.max(0, target - Date.now());
 
-  const days = Math.floor(remaining / 86400000);
-  const hours = Math.floor((remaining / 3600000) % 24);
-  const minutes = Math.floor((remaining / 60000) % 60);
-  const seconds = Math.floor((remaining / 1000) % 60);
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining / 3600000) % 24);
+    const minutes = Math.floor((remaining / 60000) % 60);
+    const seconds = Math.floor((remaining / 1000) % 60);
 
-  document.getElementById("countDays").textContent =
-    String(days).padStart(2, "0");
+    daysEl.textContent = String(days).padStart(2, "0");
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
+  }
 
-  document.getElementById("countHours").textContent =
-    String(hours).padStart(2, "0");
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateCountdown);
+  } else {
+    updateCountdown();
+  }
 
-  document.getElementById("countMinutes").textContent =
-    String(minutes).padStart(2, "0");
-
-  document.getElementById("countSeconds").textContent =
-    String(seconds).padStart(2, "0");
-}
-
-updateWeddingCountdown();
-setInterval(updateWeddingCountdown, 1000);
+  setInterval(updateCountdown, 1000);
+})();
