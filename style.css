@@ -1330,13 +1330,17 @@ footer small {
   }
 }
 
-
-
-/* PREMIUM WEDDING COUNTDOWN */
+/* WEDDING COUNTDOWN - GREEN GRADIENT */
 
 .wedding-countdown {
-  background: #faf9f6;
-  padding: 60px 20px;
+  background: linear-gradient(
+    160deg,
+    #485D4B 0%,
+    #34493C 48%,
+    #26382F 100%
+  );
+
+  padding: 70px 20px 55px;
 }
 
 .countdown-container {
@@ -1350,6 +1354,7 @@ footer small {
 
 .countdown-item {
   flex: 1;
+  min-width: 0;
   text-align: center;
 }
 
@@ -1358,7 +1363,7 @@ footer small {
   font-family: "Cormorant Garamond", serif;
   font-size: 60px;
   font-weight: 400;
-  color: #34493c;
+  color: #F5ECDD;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -1369,14 +1374,14 @@ footer small {
   font-family: "DM Sans", sans-serif;
   font-size: 10px;
   letter-spacing: 2px;
-  color: #777c75;
+  color: #C6CEBF;
 }
 
 /* MOBILE */
 
-@media (max-width: 700px) {
+@media screen and (max-width: 700px) {
   .wedding-countdown {
-    padding: 45px 12px;
+    padding: 55px 12px 45px;
   }
 
   .countdown-container {
@@ -1391,4 +1396,23 @@ footer small {
     font-size: 8px;
     letter-spacing: 0.5px;
   }
+}
+
+/* SEAMLESS COUNTDOWN TO CELEBRATION */
+
+.details {
+  background: #26382F;
+}
+
+/* Short smooth gradient at the start of countdown */
+
+.wedding-countdown {
+  background: linear-gradient(
+    to bottom,
+    #FAF9F6 0px,
+    #829582 30px,
+    #485D4B 50px,
+    #26382F 70px,
+    #26382F 100%
+  );
 }
