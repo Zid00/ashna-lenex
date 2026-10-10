@@ -1332,36 +1332,3 @@ footer small {
 
 
 
-
-/* SMOOTH GRADIENT ENTRY INTO GREEN SECTION */
-
-.details {
-  position: relative;
-  background: linear-gradient(
-    180deg,
-    #FAF9F6 0%,
-    #D7DED3 10%,
-    #8A9B89 24%,
-   
-    #34493C 65%,
-    #26382F 100%
-  );
-}
-
-
-
-@media screen and (max-width: 700px) {
-  .details {
-    padding-top: 170px;
-
-    background: linear-gradient(
-      180deg,
-      #FAF9F6 0%,
-      #D7DED3 12%,
-      #8A9B89 26%,
-      
-      #34493C 70%,
-      #26382F 100%
-    );
-  }
-}
