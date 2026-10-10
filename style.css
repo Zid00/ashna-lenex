@@ -1281,3 +1281,51 @@ footer small {
   }
 
 }
+
+/* PREMIUM FOREST GREEN GRADIENT - MOBILE ONLY */
+
+@media screen and (max-width: 700px) {
+
+  .details {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 90px 25px;
+
+    background: linear-gradient(
+      160deg,
+      #485D4B 0%,
+      #34493C 48%,
+      #26382F 100%
+    );
+
+    color: #F5ECDD;
+  }
+
+  .details h2,
+  .details h3 {
+    color: #F5ECDD;
+  }
+
+  .details h2 i {
+    color: #C6CEBF;
+  }
+
+  .details .section-label,
+  .details .num {
+    color: #C6CEBF;
+  }
+
+  .details .detail-grid p {
+    color: #E5DFD0;
+  }
+
+  .details .detail-grid article {
+    border-top: 1px solid #829182;
+  }
+
+  .details .detail-grid a {
+    color: #F5ECDD;
+    border-bottom: 1px solid #B9C4B3;
+  }
+}
