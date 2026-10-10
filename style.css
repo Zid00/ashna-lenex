@@ -1332,9 +1332,9 @@ footer small {
 
 
 
-/* WEDPIXL BRANDING - FOREST GREEN GRADIENT */
+/* WEDPIXL STUDIO - GREEN GRADIENT */
 
-footer {
+.developer-contact {
   background: linear-gradient(
     160deg,
     #485D4B 0%,
@@ -1343,10 +1343,30 @@ footer {
   );
 
   color: #F5ECDD;
+  text-align: center;
+  padding: 80px 20px;
+  width: 100%;
 }
 
-footer a,
-footer p,
-footer span {
+/* WEDPIXL BRAND NAME */
+
+.developer-contact h2,
+.developer-contact h2 i {
+  color: #F5ECDD;
+}
+
+/* DESCRIPTION */
+
+.developer-contact .developer-description {
+  color: #E5DFD0;
+}
+
+/* WHATSAPP CONTACT */
+
+.developer-contact .developer-whatsapp {
+  color: #F5ECDD;
+}
+
+.developer-contact .developer-whatsapp i {
   color: #F5ECDD;
 }
