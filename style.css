@@ -1403,15 +1403,3 @@ footer small {
 .details {
   background: #26382F;
 }
-
-/* Short smooth gradient at the start of countdown */
-
-.wedding-countdown {
-  background: linear-gradient(
-    to bottom,
-    #FAF9F6 0px,
-    #829582 30px,
-    #485D4B 50px,
-    #26382F 70px,
-  );
-}
