@@ -65,3 +65,36 @@ window.addEventListener("load", function () {
     }
   });
 });
+
+// LIVE WEDDING COUNTDOWN
+// 16 January 2027, 3:30 PM India time
+
+const weddingCountdownDate =
+  new Date("2027-01-16T15:30:00+05:30").getTime();
+
+function updateWeddingCountdown() {
+  const remaining = Math.max(
+    0,
+    weddingCountdownDate - Date.now()
+  );
+
+  const days = Math.floor(remaining / 86400000);
+  const hours = Math.floor((remaining / 3600000) % 24);
+  const minutes = Math.floor((remaining / 60000) % 60);
+  const seconds = Math.floor((remaining / 1000) % 60);
+
+  document.getElementById("countDays").textContent =
+    String(days).padStart(2, "0");
+
+  document.getElementById("countHours").textContent =
+    String(hours).padStart(2, "0");
+
+  document.getElementById("countMinutes").textContent =
+    String(minutes).padStart(2, "0");
+
+  document.getElementById("countSeconds").textContent =
+    String(seconds).padStart(2, "0");
+}
+
+updateWeddingCountdown();
+setInterval(updateWeddingCountdown, 1000);
