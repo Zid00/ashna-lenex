@@ -1292,20 +1292,13 @@ footer small {
     margin: 0;
     padding: 90px 25px;
 
-    /*background: linear-gradient(
+    background: linear-gradient(
       160deg,
       #485D4B 0%,
       #34493C 48%,
       #26382F 100%
     );
-*/
 
-background: linear-gradient(
-  160deg,
-  #85545E 0%,
-  #673D45 48%,
-  #482830 100%
-);
     color: #F5ECDD;
   }
 
