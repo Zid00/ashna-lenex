@@ -1329,3 +1329,24 @@ footer small {
     border-bottom: 1px solid #B9C4B3;
   }
 }
+
+
+
+/* WEDPIXL BRANDING - FOREST GREEN GRADIENT */
+
+footer {
+  background: linear-gradient(
+    160deg,
+    #485D4B 0%,
+    #34493C 48%,
+    #26382F 100%
+  );
+
+  color: #F5ECDD;
+}
+
+footer a,
+footer p,
+footer span {
+  color: #F5ECDD;
+}
