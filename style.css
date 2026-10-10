@@ -1332,21 +1332,3 @@ footer small {
 
 
 
-/* SHORT SMOOTH GRADIENT TRANSITION */
-
-.details {
-  background: linear-gradient(
-    to bottom,
-    #FAF9F6 0px,
-    #B5C0B1 20px,
-    #667B69 40px,
-    #26382F 60px,
-    #26382F 100%
-  );
-}
-
-@media screen and (max-width: 700px) {
-  .details {
-    padding-top: 100px;
-  }
-}
